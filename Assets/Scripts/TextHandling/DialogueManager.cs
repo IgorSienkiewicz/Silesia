@@ -57,16 +57,18 @@ public class DialogueManager: MonoBehaviour
 
     private void Animate(float fadeTarget, bool old)
     {
-        if (Equals(gameText, null))
+        if (gameText == null)
         {
             return;
         }
         var outSeq = DOTween.Sequence();
-        outSeq.Insert(0, gameText.DOFade(fadeTarget, fadeDuration));
+        outSeq.Insert(0, gameText.DOFade(fadeTarget, fadeDuration).SetEase(Ease.InOutSine));
         var targetY = gameText.transform.position.y;
-        outSeq.Insert(0, gameText.transform.DOMoveY(targetY + fadeDistance, fadeDuration));
+        var tempMove = gameText.transform.DOMoveY(targetY + fadeDistance, fadeDuration);
+        outSeq.Insert(0, tempMove);
         if (old)
         {
+            tempMove.SetEase(Ease.OutQuad);
             //Important line for the lambda
             var go = gameText.gameObject;
             outSeq.AppendCallback(() => Destroy(go));
@@ -81,6 +83,8 @@ public class DialogueManager: MonoBehaviour
             }
         } else
         {
+
+            tempMove.SetEase(Ease.InOutQuad);
             outSeq.AppendCallback(() => this.inAnimation = false);
         }
         outSeq.Play();
