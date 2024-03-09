@@ -4,63 +4,62 @@ using UnityEngine;
 
 public class HandleText : MonoBehaviour
 {
-    public int dialogueNumber;
-    public TextMeshProUGUI gameText;
-    public StreamReader reader;
-    public bool inDialogue;
+    [SerializeField] bool inDialogue;
+    [SerializeField] TextAsset sourceFile;
+    string[] dialogueLines;
+    int currentLine;
+    [SerializeField] GameObject textPrefab;
+
+    TextMeshProUGUI gameTextIn;
+    GameObject textObjectIn;
+
+    TextMeshProUGUI gameTextOut;
+    GameObject textObjectOut;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && !inDialogue)
         {
             InitializeDialogue();
         }
         if (Input.GetMouseButtonDown(0) && inDialogue)
         {
-            ReadNextLine();
+            gameTextOut = gameTextIn;
+            ShowNextLine();
+            AnimateInOut();
+            Destroy(gameTextOut.gameObject);
         }
     }
-    void ReadNextLine()
+    void ShowNextLine()
     {
-        string line = reader.ReadLine();
-        if (line != null)
-        {
-            gameText.SetText(line);
-        }
-        else
+        textObjectIn = Instantiate(textPrefab);
+        textObjectIn.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
+        gameTextIn = textObjectIn.GetComponent<TextMeshProUGUI>();
+        if (currentLine < dialogueLines.Length){
+            gameTextIn.text = dialogueLines[currentLine++];
+        } else
         {
             inDialogue = false;
-            
-            return;
-        }
+            Destroy(gameTextIn.gameObject);
+            return;            
+        } 
     }
     void InitializeDialogue()
     {
-        string path = "Assets/Resources/Scenario" + dialogueNumber + ".txt";
-        reader = new StreamReader(path);
-        string line = reader.ReadLine();
-        gameText.SetText(line);
+        dialogueLines = sourceFile.text.Split("\n");
         inDialogue = true;
+        ShowNextLine();
     }
-
-    static void ReadString()
+    void AnimateInOut()
     {
-        string path = "Assets/Resources/Scenario1.txt";
-        //Read the text from directly from the test.txt file
-        StreamReader reader = new StreamReader(path);
-        string line;
-        while ((line = reader.ReadLine())!= null)
-        {
-            Debug.Log(line);
-        }
-        reader.Close();
+        return;
     }
-
 }
+
