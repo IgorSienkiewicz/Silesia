@@ -2,10 +2,10 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 
-public class HandleText : MonoBehaviour
+public class DialogueManager: MonoBehaviour
 {
-    [SerializeField] bool inDialogue;
-    [SerializeField] TextAsset sourceFile;
+    [SerializeField] public bool inDialogue;
+    [SerializeField] public TextAsset sourceFile;
     string[] dialogueLines;
     int currentLine;
     [SerializeField] GameObject textPrefab;
@@ -25,10 +25,6 @@ public class HandleText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(1) && !inDialogue)
-        {
-            InitializeDialogue();
-        }
         if (Input.GetMouseButtonDown(0) && inDialogue)
         {
             gameTextOut = gameTextIn;
@@ -39,6 +35,7 @@ public class HandleText : MonoBehaviour
     }
     void ShowNextLine()
     {
+        Debug.Log(currentLine);
         textObjectIn = Instantiate(textPrefab);
         textObjectIn.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
         gameTextIn = textObjectIn.GetComponent<TextMeshProUGUI>();
@@ -51,10 +48,10 @@ public class HandleText : MonoBehaviour
             return;            
         } 
     }
-    void InitializeDialogue()
+    public void InitializeDialogue()
     {
         dialogueLines = sourceFile.text.Split("\n");
-        inDialogue = true;
+        currentLine = 0;
         ShowNextLine();
     }
     void AnimateInOut()
