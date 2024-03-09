@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DialogueManager: MonoBehaviour
 {
-    [SerializeField] TextAsset sourceFile;
+    [SerializeField] public TextAsset sourceFile;
     string[] dialogueLines;
     int currentLine;
     [SerializeField] TextMeshProUGUI textPrefab;
@@ -13,7 +13,7 @@ public class DialogueManager: MonoBehaviour
     [SerializeField] float fadeDistance;
     [SerializeField] Transform textSpawnPoint;
     
-    [SerializeField] bool inDialogue;
+    [SerializeField]public bool inDialogue;
     private bool inAnimation;
     private bool shouldEndDialog;
 
@@ -26,7 +26,6 @@ public class DialogueManager: MonoBehaviour
     void Start()
     {
         InputManager.Instance.OnInteract += NextLine;
-        InitializeDialogue();
     }
 
     // Update is called once per frame
@@ -101,7 +100,7 @@ public class DialogueManager: MonoBehaviour
         }
     }
 
-    void InitializeDialogue()
+    public void InitializeDialogue()
     {
         dialogueLines = sourceFile.text.Split("\n");
         inDialogue = true;
