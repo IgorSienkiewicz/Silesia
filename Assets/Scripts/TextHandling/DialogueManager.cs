@@ -3,9 +3,9 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 
-public class HandleText : MonoBehaviour
+public class DialogueManager: MonoBehaviour
 {
-    [SerializeField] TextAsset sourceFile;
+    [SerializeField] public TextAsset sourceFile;
     string[] dialogueLines;
     int currentLine;
     [SerializeField] TextMeshProUGUI textPrefab;
@@ -13,7 +13,7 @@ public class HandleText : MonoBehaviour
     [SerializeField] float fadeDistance;
     [SerializeField] Transform textSpawnPoint;
     
-    [SerializeField] bool inDialogue;
+    [SerializeField]public bool inDialogue;
     private bool inAnimation;
     private bool shouldEndDialog;
 
@@ -26,7 +26,6 @@ public class HandleText : MonoBehaviour
     void Start()
     {
         InputManager.Instance.OnInteract += NextLine;
-        InitializeDialogue();
     }
 
     // Update is called once per frame
@@ -58,16 +57,18 @@ public class HandleText : MonoBehaviour
 
     private void Animate(float fadeTarget, bool old)
     {
-        if (Equals(gameText, null))
+        if (gameText == null)
         {
             return;
         }
         var outSeq = DOTween.Sequence();
-        outSeq.Insert(0, gameText.DOFade(fadeTarget, fadeDuration));
+        outSeq.Insert(0, gameText.DOFade(fadeTarget, fadeDuration).SetEase(Ease.InOutSine));
         var targetY = gameText.transform.position.y;
-        outSeq.Insert(0, gameText.transform.DOMoveY(targetY + fadeDistance, fadeDuration));
+        var tempMove = gameText.transform.DOMoveY(targetY + fadeDistance, fadeDuration);
+        outSeq.Insert(0, tempMove);
         if (old)
         {
+            tempMove.SetEase(Ease.OutQuad);
             //Important line for the lambda
             var go = gameText.gameObject;
             outSeq.AppendCallback(() => Destroy(go));
@@ -82,6 +83,8 @@ public class HandleText : MonoBehaviour
             }
         } else
         {
+
+            tempMove.SetEase(Ease.InOutQuad);
             outSeq.AppendCallback(() => this.inAnimation = false);
         }
         outSeq.Play();
@@ -101,7 +104,7 @@ public class HandleText : MonoBehaviour
         }
     }
 
-    void InitializeDialogue()
+    public void InitializeDialogue()
     {
         dialogueLines = sourceFile.text.Split("\n");
         inDialogue = true;

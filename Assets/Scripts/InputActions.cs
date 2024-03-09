@@ -60,6 +60,17 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""e152f53c-e8b1-4594-ba57-bc7a0b963ddb"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""04a9daa4-b997-4d40-83b2-eab9fd8bf673"",
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
