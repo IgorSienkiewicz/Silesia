@@ -13,6 +13,7 @@ public class InputManager : MonoBehaviour
     public Vector2 MousePositiotn => Input.Main.MousePos.ReadValue<Vector2>();
 
     public event Action OnInteract;
+    public event Action OnBack;
 
     private InputActions Input;
 
@@ -22,6 +23,7 @@ public class InputManager : MonoBehaviour
         Instance = this;
         Input = new InputActions();
         Input.Main.Click.started += (_) => OnInteract?.Invoke();
+        Input.Main.Back.started += (_) => OnBack?.Invoke();
     }
 
     void OnEnable()
