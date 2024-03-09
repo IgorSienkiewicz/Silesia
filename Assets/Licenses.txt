@@ -1,4 +1,7 @@
 Sound assets:
 - Rain on Windows, Interior, A.wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org
 - https://freesound.org/people/Anthousai/sounds/398741/
+- https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound
+	- cave ambience
+- https://freesound.org/people/launchsite/sounds/557346/
 
