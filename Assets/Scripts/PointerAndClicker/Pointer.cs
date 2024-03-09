@@ -24,14 +24,12 @@ public class Pointer : MonoBehaviour
             float.PositiveInfinity,
             mask.value))
         {
-            var clicker = hit.collider.GetComponent<IClicker>();
+            var clickers = hit.collider.GetComponents<IClicker>();
 
-            if (clicker.Equals(null))
+            foreach (var clicker in clickers)
             {
-                return;
+                clicker.TriggerAction();
             }
-
-            clicker.TriggerAction();
         }
     }
 }
