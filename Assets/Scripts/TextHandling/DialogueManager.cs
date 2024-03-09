@@ -1,62 +1,112 @@
+using DG.Tweening;
 using System.IO;
 using TMPro;
 using UnityEngine;
 
 public class DialogueManager: MonoBehaviour
 {
-    [SerializeField] public bool inDialogue;
-    [SerializeField] public TextAsset sourceFile;
+    [SerializeField] TextAsset sourceFile;
     string[] dialogueLines;
     int currentLine;
-    [SerializeField] GameObject textPrefab;
+    [SerializeField] TextMeshProUGUI textPrefab;
+    [SerializeField] float fadeDuration;
+    [SerializeField] float fadeDistance;
+    [SerializeField] Transform textSpawnPoint;
+    
+    [SerializeField] bool inDialogue;
+    private bool inAnimation;
+    private bool shouldEndDialog;
 
-    TextMeshProUGUI gameTextIn;
-    GameObject textObjectIn;
+    TextMeshProUGUI gameText;
+    //GameObject textObjectIn;
 
-    TextMeshProUGUI gameTextOut;
-    GameObject textObjectOut;
+    //TextMeshProUGUI gameTextOut;
+    //GameObject textObjectOut;
 
-    // Start is called before the first frame update
     void Start()
     {
-
+        InputManager.Instance.OnInteract += NextLine;
+        InitializeDialogue();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && inDialogue)
+       /* if (Input.GetMouseButtonDown(1) && !inDialogue)
         {
-            gameTextOut = gameTextIn;
+            InitializeDialogue();
+        }*/
+    }
+
+    private void NextLine()
+    {
+        if (!inDialogue || inAnimation)
+        {
+            return;
+        }
+        
+        inAnimation = true;
+
+        Animate(0f, true);
+
+        if (!shouldEndDialog)
+        {
             ShowNextLine();
-            AnimateInOut();
-            Destroy(gameTextOut.gameObject);
+            Animate(1f, false);
         }
     }
-    void ShowNextLine()
+
+    private void Animate(float fadeTarget, bool old)
     {
-        Debug.Log(currentLine);
-        textObjectIn = Instantiate(textPrefab);
-        textObjectIn.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
-        gameTextIn = textObjectIn.GetComponent<TextMeshProUGUI>();
-        if (currentLine < dialogueLines.Length){
-            gameTextIn.text = dialogueLines[currentLine++];
+        if (Equals(gameText, null))
+        {
+            return;
+        }
+        var outSeq = DOTween.Sequence();
+        outSeq.Insert(0, gameText.DOFade(fadeTarget, fadeDuration));
+        var targetY = gameText.transform.position.y;
+        outSeq.Insert(0, gameText.transform.DOMoveY(targetY + fadeDistance, fadeDuration));
+        if (old)
+        {
+            //Important line for the lambda
+            var go = gameText.gameObject;
+            outSeq.AppendCallback(() => Destroy(go));
+            if (shouldEndDialog)
+            {
+                outSeq.AppendCallback(() => 
+                {
+                    this.inDialogue = false;
+                    this.shouldEndDialog = false;
+                    this.inAnimation = false;
+                });
+            }
         } else
         {
-            inDialogue = false;
-            Destroy(gameTextIn.gameObject);
-            return;            
-        } 
+            outSeq.AppendCallback(() => this.inAnimation = false);
+        }
+        outSeq.Play();
     }
-    public void InitializeDialogue()
+
+    void ShowNextLine()
+    {
+        gameText = Instantiate(textPrefab, textSpawnPoint);
+        gameText.transform.localPosition = new Vector3(0f, -fadeDistance, 0f);
+
+        if (currentLine < dialogueLines.Length) {
+            gameText.text = dialogueLines[currentLine++];
+        }
+        if (currentLine == dialogueLines.Length)
+        {
+            shouldEndDialog = true;
+        }
+    }
+
+    void InitializeDialogue()
     {
         dialogueLines = sourceFile.text.Split("\n");
+        inDialogue = true;
         currentLine = 0;
-        ShowNextLine();
-    }
-    void AnimateInOut()
-    {
-        return;
+        //ShowNextLine();
     }
 }
 
