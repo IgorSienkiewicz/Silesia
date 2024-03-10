@@ -26,6 +26,11 @@ public class CameraManager : MonoBehaviour
 
     public void Push(CinemachineVirtualCamera cam)
     {
+        if (brain.IsBlending)
+        {
+            Debug.Log("Already Moving");
+            return;
+        }
         if (cameras.Count > 0)
         {
             var prev = cameras.Peek();
