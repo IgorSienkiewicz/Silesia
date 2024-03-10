@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraFocusClicker : MonoBehaviour, IClicker
+public class POIFocusClicker : MonoBehaviour, IClicker
 {
     [SerializeField]
-    private CinemachineVirtualCamera _camera;
+    private POI poi;
 
     public void TriggerAction()
     {
-        CameraManager.Instance.Push(_camera);
+        CameraManager.Instance.Push(poi);
     }
 }

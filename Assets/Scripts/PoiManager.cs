@@ -8,10 +8,10 @@ public class CameraManager : MonoBehaviour
 {
     public static CameraManager Instance { get; private set; }
 
-    private Stack<CinemachineVirtualCamera> cameras;
+    private Stack<POI> POIs;
 
     [SerializeField]
-    private CinemachineVirtualCamera mainCam;
+    private POI mainPOI;
     [SerializeField]
     private CinemachineBrain brain;
 
@@ -19,25 +19,25 @@ public class CameraManager : MonoBehaviour
     {
         Assert.IsNull(Instance);
         Instance = this;
-        cameras = new Stack<CinemachineVirtualCamera>();
+        POIs = new Stack<POI>();
         InputManager.Instance.OnBack += Pop;
-        Push(mainCam);
+        Push(mainPOI);
     }
 
-    public void Push(CinemachineVirtualCamera cam)
+    public void Push(POI poi)
     {
         if (brain.IsBlending)
         {
             Debug.Log("Already Moving");
             return;
         }
-        if (cameras.Count > 0)
+        if (POIs.Count > 0)
         {
-            var prev = cameras.Peek();
-            prev.enabled = false;
+            var prev = POIs.Peek();
+            prev.Depart();
         }
-        cameras.Push(cam);
-        cam.enabled = true;
+        POIs.Push(poi);
+        poi.Arrive();
     }
 
     public void Pop()
@@ -47,14 +47,14 @@ public class CameraManager : MonoBehaviour
             Debug.Log("Already Moving");
             return;
         }
-        if (cameras.Count > 1)
+        if (POIs.Count > 1)
         {
-            cameras.Pop().enabled = false;
-            cameras.Peek().enabled = true;
+            POIs.Pop().Depart();
+            POIs.Peek().Arrive();
         }
         else
         {
-            Debug.Log("Attempting to Pop last camera");
+            Debug.Log("Attempting to Pop last POI");
         }
     }
 }
