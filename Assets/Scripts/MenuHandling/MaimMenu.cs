@@ -8,6 +8,7 @@ public class MaimMenu : MonoBehaviour
     bool gameStarted = false;
     bool isPaused = true;
     [SerializeField] GameObject RaycastBlocker;
+    [SerializeField] DialogueManager dialogueManager;
     [SerializeField] GameObject MenuCanvas;
     [SerializeField] GameObject Credits;
     [SerializeField] GameObject Settings;
@@ -44,6 +45,7 @@ public class MaimMenu : MonoBehaviour
         GameTitle.SetActive(false);
         PausedClicks.SetActive(true);
         GameUnpause();
+        dialogueManager.InitializeFirstDialogue();
     }
     public void GameUnpause()
     {
