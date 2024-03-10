@@ -10,6 +10,6 @@ public class POIFocusClicker : MonoBehaviour, IClicker
 
     public void TriggerAction()
     {
-        CameraManager.Instance.Push(poi);
+        PoiManager.Instance.Push(poi);
     }
 }

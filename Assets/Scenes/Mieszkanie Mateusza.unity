@@ -1142,6 +1142,7 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 64
+  dialogueManagerScript: {fileID: 791113616}
 --- !u!114 &791113618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1181,6 +1182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db46eec650cf444479147a2622eb6c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialogueManagerScript: {fileID: 791113616}
   mainPOI: {fileID: 2047099884}
   brain: {fileID: 977711383}
 --- !u!1 &868676996
