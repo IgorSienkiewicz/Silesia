@@ -19,6 +19,7 @@ public class DialogueClicker : MonoBehaviour, IClicker
             Debug.Log("here2");
             dialogueManagerScript.sourceFile = this.sourceFile;
             dialogueManagerScript.InitializeDialogue();
+            dialogueManagerScript.NextLine();
             StartCoroutine(WaitCoroutine());
             
         }

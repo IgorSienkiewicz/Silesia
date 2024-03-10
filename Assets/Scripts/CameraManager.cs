@@ -8,6 +8,8 @@ public class CameraManager : MonoBehaviour
 {
     public static CameraManager Instance { get; private set; }
 
+    [SerializeField] DialogueManager dialogueManagerScript;
+
     private Stack<CinemachineVirtualCamera> cameras;
 
     [SerializeField]
@@ -40,6 +42,11 @@ public class CameraManager : MonoBehaviour
         if (brain.IsBlending)
         {
             Debug.Log("Already Moving");
+            return;
+        }
+        if (dialogueManagerScript.inDialogue)
+        {
+            Debug.Log("In Dialogue");
             return;
         }
         if (cameras.Count > 1)

@@ -37,7 +37,7 @@ public class DialogueManager: MonoBehaviour
         }*/
     }
 
-    private void NextLine()
+    public void NextLine()
     {
         if (!inDialogue || inAnimation)
         {
