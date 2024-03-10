@@ -4,14 +4,31 @@ using UnityEngine;
 using GraphicsConfigurator.API.URP;
 using UnityEngine.Rendering.Universal;
 using ShadowResolution = UnityEngine.Rendering.Universal.ShadowResolution;
+using TMPro;
 
 public class GraphicsSettingsTest : MonoBehaviour
 {
+    [Header("Default settings")]
+    public float renderScaleDefault = 0.25f;
+    public float upsalingFilterIndexDefault = 2;
+
+
+    [SerializeField] private TMP_Text text;
+
+    private void Start()
+    {
+        Configuring.CurrentURPA.RenderScale(renderScaleDefault);
+        //Configuring.CurrentURPA.UpscalingFilter(UpscalingFilterSelection.Point);
+        Configuring.CurrentURPA.OpaqueDownsampling(Downsampling.None);
+        text.text = renderScaleDefault.ToString();
+    }
+
     public void RenderScaleChange(float scale)
     {
-        if(scale >= 0.2 && scale <= 2)
+        if(scale / 20 >= 0.1 && scale <= 2 / 20)
         {
-            Configuring.CurrentURPA.RenderScale(scale);
+            Configuring.CurrentURPA.RenderScale(scale / 20);
+            text.text = (scale / 20).ToString();
         }
     }
 
