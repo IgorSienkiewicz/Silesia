@@ -7,14 +7,14 @@ public class POI : MonoBehaviour
 {
     [field: SerializeField]
     public CinemachineVirtualCamera PoiCamera { get; private set; }
-/*
-    [SerializeField] private LayerMask enabledLayers;
-    [SerializeField] private LayerMask disabledLayers;*/
+
+    private bool visited = false;
 
     [SerializeField] private GameObject marker;
 
     [SerializeField] private Collider targetCollider;
     [SerializeField] private POI[] nextPois;
+    [SerializeField] private POI[] requiredPois;
 
     private void Awake()
     {
@@ -23,6 +23,16 @@ public class POI : MonoBehaviour
 
     private void Enable()
     {
+        var flag = true;
+        foreach (var poi in requiredPois)
+        {
+            flag &= poi.visited;
+        }
+
+        if (!flag)
+        {
+            return;
+        }
         /*targetCollider.excludeLayers = 0;
         targetCollider.includeLayers = enabledLayers.value;*/
         targetCollider.gameObject.layer = 6;
@@ -44,6 +54,7 @@ public class POI : MonoBehaviour
         {
             poi.Enable();
         }
+        visited = true;
     }
 
     public void Depart()
