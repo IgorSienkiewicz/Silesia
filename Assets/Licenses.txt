@@ -4,4 +4,6 @@ Sound assets:
 - https://nox-sound-design.itch.io/essentials-series-sfx-nox-sound
 	- cave ambience
 - https://freesound.org/people/launchsite/sounds/557346/
+- https://github.com/inc8877/GraphicsConfigurator/tree/main
+- https://github.com/Tayx94/graphy
 
