@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Mieszkanie.unity
-    guid: 354ff6b1e916bfc4dba24f589bc18389
+    path: Assets/Scenes/Mieszkanie Mateusza.unity
+    guid: 88c06a462168d784887c862117e3d32b
   m_configObjects: {}
