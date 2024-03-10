@@ -25,7 +25,7 @@ public class GraphicsSettingsTest : MonoBehaviour
 
     public void RenderScaleChange(float scale)
     {
-        if(scale / 20 >= 0.1 && scale <= 2 / 20)
+        if(scale / 20 >= 0.1 && scale / 20 <= 2)
         {
             Configuring.CurrentURPA.RenderScale(scale / 20);
             text.text = (scale / 20).ToString();
