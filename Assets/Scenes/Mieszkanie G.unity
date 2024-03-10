@@ -335,7 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb24bd4dac5a4cc4e8b9513832e7a2bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camera: {fileID: 325840755}
+  poi: {fileID: 0}
 --- !u!114 &325840753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -840,7 +840,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &594444555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2090,7 +2090,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db46eec650cf444479147a2622eb6c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCam: {fileID: 594444555}
+  mainPOI: {fileID: 0}
   brain: {fileID: 977711383}
 --- !u!81 &977711386
 AudioListener:
@@ -4312,7 +4312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb24bd4dac5a4cc4e8b9513832e7a2bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camera: {fileID: 1997749788}
+  poi: {fileID: 0}
 --- !u!114 &1997749782
 MonoBehaviour:
   m_ObjectHideFlags: 0
