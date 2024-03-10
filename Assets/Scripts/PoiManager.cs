@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class CameraManager : MonoBehaviour
+public class PoiManager : MonoBehaviour
 {
-    public static CameraManager Instance { get; private set; }
+    public static PoiManager Instance { get; private set; }
+    [SerializeField] DialogueManager dialogueManagerScript;
 
     private Stack<POI> POIs;
 
@@ -45,6 +46,11 @@ public class CameraManager : MonoBehaviour
         if (brain.IsBlending)
         {
             Debug.Log("Already Moving");
+            return;
+        }
+        if (dialogueManagerScript.inDialogue)
+        {
+            Debug.Log("In Dialogue");
             return;
         }
         if (POIs.Count > 1)
