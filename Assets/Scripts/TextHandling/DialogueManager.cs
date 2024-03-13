@@ -111,5 +111,13 @@ public class DialogueManager: MonoBehaviour
         currentLine = 0;
         //ShowNextLine();
     }
+
+    public void InitializeFirstDialogue()
+    {
+        dialogueLines = sourceFile.text.Split("\n");
+        inDialogue = true;
+        currentLine = 0;
+        ShowNextLine();
+    }
 }
 
